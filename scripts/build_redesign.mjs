@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const project = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const templatePath = path.join(project, "site.template.html");
 const outputPath = path.join(project, "acyuta-gopi-tour.html");
+const pagesOutputPath = path.join(project, "index.html");
 
 const dataUri = (relativePath) => {
   const extension = path.extname(relativePath).slice(1).toLowerCase();
@@ -41,4 +42,6 @@ const unresolved = html.match(/{{[A-Z_]+}}/g);
 if (unresolved) throw new Error(`Unresolved template markers: ${unresolved.join(", ")}`);
 
 fs.writeFileSync(outputPath, html);
+fs.writeFileSync(pagesOutputPath, html);
 console.log(`Built ${outputPath} (${Buffer.byteLength(html).toLocaleString()} bytes)`);
+console.log(`Built ${pagesOutputPath} for GitHub Pages`);
